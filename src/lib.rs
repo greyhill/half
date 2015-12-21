@@ -67,7 +67,7 @@ pub fn slice_to_f32(v: &[f16]) -> Vec<f32> {
 
 #[test]
 fn test() {
-    for bytes in 0..(1 << 15) as u16 {
+    for bytes in 0..65535 as u16 {
         let h0 = f16 { bytes: bytes };
 
         let f: f32 = h0.into();
