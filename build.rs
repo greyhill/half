@@ -52,7 +52,7 @@ fn convert_mantissa(i: u32) -> u32 {
     }
     m &= 0xFF7FFFFF;
     e += 0x38800000;
-    return m | unsafe { mem::transmute::<i32, u32>(e) };
+    (m | unsafe { mem::transmute::<i32, u32>(e) }) & 0x7FFFFFFF
 }
 
 fn setup_mantissa_table<P: AsRef<path::Path>>(p: P) -> () {
