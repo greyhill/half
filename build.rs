@@ -50,7 +50,7 @@ fn convert_mantissa(i: u32) -> u32 {
         e -= 0x00800000;
         m <<= 1;
     }
-    m &= 0xFF3FFFFF;
+    m &= 0xFF7FFFFF;
     e += 0x38800000;
     return m | unsafe { mem::transmute::<i32, u32>(e) };
 }
