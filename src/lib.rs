@@ -49,7 +49,7 @@ impl Into<f32> for f16 {
     }
 }
 
-pub fn vec_to_f16(v: &Vec<f32>) -> Vec<f16> {
+pub fn slice_to_f16(v: &[f32]) -> Vec<f16> {
     let mut tr = Vec::with_capacity(v.len());
     for it in v.iter() {
         tr.push(f16::from(*it));
@@ -57,7 +57,7 @@ pub fn vec_to_f16(v: &Vec<f32>) -> Vec<f16> {
     tr
 }
 
-pub fn vec_from_f16(v: &Vec<f16>) -> Vec<f32> {
+pub fn slice_to_f32(v: &[f16]) -> Vec<f32> {
     let mut tr = Vec::with_capacity(v.len());
     for it in v.iter() {
         tr.push((*it).into());
