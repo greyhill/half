@@ -1,0 +1,8 @@
+[package]
+name = "half"
+version = "0.0.1"
+authors = ["Madison McGaffin <greyhill@gmail.com>"]
+build = "build.rs"
+
+[lib]
+path = "src/lib.rs"
