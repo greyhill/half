@@ -49,6 +49,22 @@ impl Into<f32> for f16 {
     }
 }
 
+pub fn vec_to_f16(v: &Vec<f32>) -> Vec<f16> {
+    let mut tr = Vec::with_capacity(v.len());
+    for it in v.iter() {
+        tr.push(f16::from(*it));
+    }
+    tr
+}
+
+pub fn vec_from_f16(v: &Vec<f16>) -> Vec<f32> {
+    let mut tr = Vec::with_capacity(v.len());
+    for it in v.iter() {
+        tr.push((*it).into());
+    }
+    tr
+}
+
 #[test]
 fn test() {
     for bytes in 0..(1 << 15) as u16 {
