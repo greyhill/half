@@ -72,8 +72,6 @@ fn test() {
 
         let f: f32 = h0.into();
         let h1 = f16::from(f);
-        let f1: f32 = h1.into();
-        assert_eq!(f, f1);
-        //assert_eq!(h0, h1);
+        assert_eq!(h0, h1);
     }
 }

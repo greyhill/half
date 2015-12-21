@@ -15,17 +15,16 @@ fn slice_cast<T: Sized>(i: &[T]) -> &[u8] {
 fn setup_exponent_table<P: AsRef<path::Path>>(p: P) -> () {
     let mut table: Vec<u32> = iter::repeat(0u32).take(64).collect();
     table[0] = 0;
-    table[32] = 0x80000000;
 
     for i in 1..31 {
-        table[i] = (i << 23) as u32;
+        table[i] = ((i as u32) << 23) as u32;
     }
+    table[31] = 0x47800000;
+    table[32] = 0x80000000;
     for i in 33..63 {
-        table[i] = (0x80000000 + (i - 32) << 23) as u32;
+        table[i] = (0x80000000 + (i as u32 - 32) << 23) as u32;
     }
-
-    table[31] = 0x4780000;
-    table[63] = 0xC780000;
+    table[63] = 0xC7800000;
 
     let mut file = fs::File::create(p.as_ref()).expect("Error opening exponent table");
     file.write(slice_cast(&table[..])).expect("Error writing exponent table");
@@ -52,7 +51,7 @@ fn convert_mantissa(i: u32) -> u32 {
     }
     m &= 0xFF7FFFFF;
     e += 0x38800000;
-    (m | unsafe { mem::transmute::<i32, u32>(e) }) & 0x7FFFFFFF
+    m | unsafe { mem::transmute::<i32, u32>(e) }
 }
 
 fn setup_mantissa_table<P: AsRef<path::Path>>(p: P) -> () {
@@ -62,7 +61,7 @@ fn setup_mantissa_table<P: AsRef<path::Path>>(p: P) -> () {
         mantissa_table[i] = convert_mantissa(i as u32);
     }
     for i in 1024..2048 {
-        mantissa_table[i] = 0x38000000 + ((i - 1024) << 13) as u32;
+        mantissa_table[i] = 0x38000000 + (((i as u32) - 1024) << 13) as u32;
     }
 
     let mut file = fs::File::create(p.as_ref()).expect("Error opening mantissa table");
