@@ -44,7 +44,9 @@ impl Into<f32> for f16 {
             let h1 = (self.bytes & 0x3FF) as u16 as isize;
 
             let mt_offset = *offset_table.offset(h0) as isize + h1;
-            transmute(*mantissa_table.offset(mt_offset) + *exponent_table.offset(h0))
+            let mut tr = *mantissa_table.offset(mt_offset) + *exponent_table.offset(h0);
+            tr |= ((self.bytes & 0x8000) as u32) << 16;
+            transmute(tr)
         }
     }
 }
